@@ -34,9 +34,6 @@ pipeline {
                         sh 'npx vitest run --reporter=verbose'
                     }
                 }
-                stage('integration tests'){
-
-                }
             }
         }
 
