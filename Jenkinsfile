@@ -19,13 +19,12 @@ pipeline {
         }
 
         stage('test') {
-            parallel {
                 stage('unit tests') {
                     agent {
                         docker {
                             image 'node:25-alpine'
                             reuseNode true
-                            customWorkspace "workspace-${env.STAGE_NAME}"
+                            
 
                         }
                     }
@@ -41,7 +40,7 @@ pipeline {
                         docker {
                             image 'mcr.microsoft.com/playwright:v1.58.2-jammy'
                             reuseNode true
-                            customWorkspace "workspace-${env.STAGE_NAME}"
+                            
 
                         }
                     }
@@ -50,7 +49,6 @@ pipeline {
                         sh 'npx playwright test'
                     }
                 }
-            }
         }
 
         stage('deploy') {
@@ -70,7 +68,7 @@ pipeline {
                 docker {
                     image 'mcr.microsoft.com/playwright:v1.58.2-jammy'
                     reuseNode true
-                    customWorkspace "workspace-${env.STAGE_NAME}"
+                    
 
                 }
             }
