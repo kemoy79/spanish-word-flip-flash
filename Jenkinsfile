@@ -1,11 +1,12 @@
 pipeline {
     agent any
-    
+
     options {
         ansiColor('xterm')
     }
 
     stages {
+
         stage('build') {
             agent {
                 docker {
@@ -19,29 +20,28 @@ pipeline {
         }
 
         stage('test') {
+            parallel {
+
                 stage('unit tests') {
                     agent {
                         docker {
                             image 'node:25-alpine'
                             reuseNode true
-                            
-
+                            customWorkspace "ws-unit-tests"
                         }
                     }
                     steps {
-                        // Unit tests with Vitest
                         sh 'npm ci'
-                        // sh 'npm run build'
                         sh 'npx vitest run --reporter=verbose'
                     }
                 }
-                stage('integration tests'){
+
+                stage('integration tests') {
                     agent {
                         docker {
                             image 'mcr.microsoft.com/playwright:v1.58.2-jammy'
                             reuseNode true
-                            
-
+                            customWorkspace "ws-integration-tests"
                         }
                     }
                     steps {
@@ -49,6 +49,7 @@ pipeline {
                         sh 'npx playwright test'
                     }
                 }
+            }
         }
 
         stage('deploy') {
@@ -58,22 +59,20 @@ pipeline {
                 }
             }
             steps {
-                // Mock deployment which does nothing
                 echo 'Mock deployment was successful!'
             }
         }
-        
+
         stage('e2e') {
             agent {
                 docker {
                     image 'mcr.microsoft.com/playwright:v1.58.2-jammy'
                     reuseNode true
-                    
-
+                    customWorkspace "ws-e2e-tests"
                 }
             }
             environment {
-                E2E_BASE_URL = 'https://spanish-cards.netlify.app'
+                E2E_BASE_URL = 'https://spanish-cards.netlify.app/'
             }
             steps {
                 sh 'npm ci'
