@@ -69,7 +69,7 @@ pipeline {
                 }
             }
             environment {
-                E2E_BASE_URL = 'https://spanish-cards.netlify.app/'
+                E2E_BASE_URL = 'https://spanish-cards.netlify.app'
             }
             steps {
                 sh 'npm ci'
