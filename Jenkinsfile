@@ -25,6 +25,8 @@ pipeline {
                         docker {
                             image 'node:25-alpine'
                             reuseNode true
+                            customWorkspace "workspace-${env.STAGE_NAME}"
+
                         }
                     }
                     steps {
@@ -39,6 +41,8 @@ pipeline {
                         docker {
                             image 'mcr.microsoft.com/playwright:v1.58.2-jammy'
                             reuseNode true
+                            customWorkspace "workspace-${env.STAGE_NAME}"
+
                         }
                     }
                     steps {
@@ -66,6 +70,8 @@ pipeline {
                 docker {
                     image 'mcr.microsoft.com/playwright:v1.58.2-jammy'
                     reuseNode true
+                    customWorkspace "workspace-${env.STAGE_NAME}"
+
                 }
             }
             environment {
