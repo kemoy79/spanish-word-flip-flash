@@ -17,7 +17,7 @@ export default defineConfig({
     ['html', { outputFolder: 'reports-e2e/html', open: 'never' }],
   ],
   use: {
-    baseURL: process.env.E2E_BASE_URL,
+    baseURL: 'http://localhost:4173',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -28,14 +28,15 @@ export default defineConfig({
     // { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
     // { name: 'webkit', use: { ...devices['Desktop Safari'] } },
   ],
-  webServer: startLocalServer
-    ? {
-        command: 'npm run dev -- --host 127.0.0.1 --port 8080 --strictPort',
-        url: baseURL,
-        reuseExistingServer: true,
-        timeout: 120_000,
+  webServer:  {
+    command: 'npx serve -s dist -l 4173', 
+    port: 4173, 
+    reuseExistingServer: !process.env.CI,
+        // command: 'npm run dev -- --host 127.0.0.1 --port 8080 --strictPort',
+        // url: baseURL,
+        // reuseExistingServer: true,
+        // timeout: 120_000,
       }
-    : undefined,
 });
 
 
