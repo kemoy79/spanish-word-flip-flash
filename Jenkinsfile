@@ -9,7 +9,7 @@ pipeline {
         stage('build') {
             agent {
                 docker {
-                    image 'node:25-alpine'
+                    image 'node:20-alpine'
                 }
             }
             steps {
@@ -23,7 +23,7 @@ pipeline {
                 stage('unit tests') {
                     agent {
                         docker {
-                            image 'node:25-alpine'
+                            image 'node:20-alpine'
                             reuseNode true
                             customWorkspace 'ws-unit'
                         }
