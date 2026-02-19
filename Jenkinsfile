@@ -46,7 +46,7 @@ pipeline {
                 stage('integration tests') {
                     agent {
                         docker {
-                            image 'mcr.microsoft.com/playwright:v1.58.2-jammy-node20'
+                            image 'mcr.microsoft.com/playwright:v1.58.2-jammy'
                             reuseNode false
                         }
                     }
@@ -82,7 +82,7 @@ pipeline {
         stage('e2e') {
             agent {
                 docker {
-                    image 'mcr.microsoft.com/playwright:v1.58.2-jammy-node20'
+                    image 'mcr.microsoft.com/playwright:v1.58.2-jammy'
                     reuseNode false
                 }
             }
