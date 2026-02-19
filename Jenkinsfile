@@ -6,7 +6,6 @@ pipeline {
     }
 
     stages {
-
         stage('build') {
             agent {
                 docker {
@@ -21,13 +20,12 @@ pipeline {
 
         stage('test') {
             parallel {
-
                 stage('unit tests') {
                     agent {
                         docker {
                             image 'node:25-alpine'
                             reuseNode true
-                            customWorkspace "ws-unit"
+                            customWorkspace 'ws-unit'
                         }
                     }
                     steps {
@@ -41,7 +39,7 @@ pipeline {
                         docker {
                             image 'mcr.microsoft.com/playwright:v1.58.2-jammy'
                             reuseNode true
-                            customWorkspace "ws-integration"
+                            customWorkspace 'ws-integration'
                         }
                     }
                     steps {
@@ -68,7 +66,7 @@ pipeline {
                 docker {
                     image 'mcr.microsoft.com/playwright:v1.58.2-jammy'
                     reuseNode true
-                    customWorkspace "ws-e2e-tests"
+                    customWorkspace 'ws-e2e-tests'
                 }
             }
             environment {
