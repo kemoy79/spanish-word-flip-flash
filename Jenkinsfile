@@ -43,6 +43,7 @@ pipeline {
                         }
                     }
                     steps {
+                        sh 'git clean -fdx'
                         sh 'npm ci'
                         sh 'npx playwright test'
                     }
